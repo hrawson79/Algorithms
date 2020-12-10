@@ -57,12 +57,20 @@ class BinarySearchTree(object):
     def __iter__(self):
         return self._inorder_gen(self.root)
 
-    # Helper method to iterate the tree
+    # Helper method to iterate inorder the tree
     def _inorder_gen(self, root):
         if root is not None:
             for item in self._inorder_gen(root.left):
                 yield item
-            yield root.item
+            yield root.get_data()
             for item in self._inorder_gen(root.right):
                 yield item
     
+    # Helper method to iterate preorder the tree
+    def _preorder_gen(self, root):
+        if root is not None:
+            yield root.get_data()
+            for item in self._preorder_gen(root.left):
+                yield item
+            for item in self._preorder_gen(root.right):
+                yield item
