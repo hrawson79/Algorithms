@@ -1,5 +1,5 @@
 # LList Class
-from list_node import ListNode
+from LinkedLists.list_node import ListNode
 
 class LList(object):
     # Constructor
@@ -88,14 +88,15 @@ class LList(object):
 
     # Method to insert item into list at position
     def insert(self, item, position):
-        assert 0 <= position < self.size
+        assert 0 <= position <= self.size
 
         # If list size is 0 or inserting at end of list, simple append
-        if self.size == 0 or position == self.size - 1:
+        if self.size == 0 or position == self.size:
             self.append(item)
         # Else if position is beginning of list
-        elif position == 0 or position:
-            self.head = ListNode(item, self.head.get_link())
+        elif position == 0:
+            node = self.head
+            self.head = ListNode(item, node)
         # Else find position to insert
         else:
             prevNode = self._find(position - 1)

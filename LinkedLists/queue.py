@@ -1,5 +1,5 @@
 # Queue Class
-from list_node import ListNode
+from LinkedLists.list_node import ListNode
 
 class Queue(object):
     # Constructor
@@ -7,6 +7,10 @@ class Queue(object):
         self.front = None
         self.end = None
         self.size = 0
+
+    # Method to return the size of the queue
+    def __len__(self):
+        return self.size
 
     # Method to add item to the queue
     def enqueue(self, item):
@@ -36,3 +40,10 @@ class Queue(object):
     # Method to retrieve the size of the queue
     def get_size(self):
         return self.size
+
+    # Method to iterate the queue
+    def __iter__(self):
+        current_node = self.front
+        while current_node is not None:
+            yield current_node.get_item()
+            current_node = current_node.get_link()

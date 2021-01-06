@@ -17,16 +17,16 @@ class BinarySearchTree(object):
             return TreeNode(item)
 
         # item is equal to root
-        if (item == root.get_data()):
+        if (item == root.data):
             raise ValueError("Inserting duplicate item")
 
         # item is less than root
-        if (item < root.get_data()):
-            root.set_left(self._subtree_insert(root.get_left(), item))
+        if (item < root.data):
+            root.left = self._subtree_insert(root.left, item)
 
         # item is greater than root
-        if (item > root.get_data()):
-            root.set_right(self._subtree_insert(root.get_right(), item))
+        if (item > root.data):
+            root.right = self._subtree_insert(root.right, item)
 
         return root
 
@@ -34,24 +34,48 @@ class BinarySearchTree(object):
     def find(self, item):
         node = self.root
 
-        while (node is not None and not(node.get_data() == item)):
-            if (item < node.get_data()):
-                node = node.get_left()
+        while (node is not None and not(node.data == item)):
+            if (item < node.data):
+                node = node.left
             else:
-                node = node.get_right()
+                node = node.right
         
         if (node is None):
             return None
         else:
-            return node.get_data()
+            return node.data
 
     # Method to remove item from the tree
     def delete(self, item):
-        self.root = self.root
+        self.root = self._subtree_delete(root, item)
 
     # Helper method to remove item from the tree
     def _subtree_delete(self, root, item):
-        return None
+        # Empty tree, nothing to do
+        if root is None:
+            return None
+        # Item is less than root
+        if item < root.data:
+            root.left = _subtree_delete(root.left, item)
+        # Item is greater than root
+        elif item > root.data:
+            root.right = _subtree_delete(root.right, item)
+        else:
+            if root.left is None:
+                root = root.right
+            elif root.right is None:
+                root = root.left
+            else:
+                root.item, root.left = self._subtree_del_max(root.left)
+        return root
+        
+    # Helper method to promot the max
+    def _subtree_del_max(self, root):
+        if root.right is None:
+            return root.item, root.left
+        else:
+            maxVal, root.right = self._subtree_del_max(root.right)
+            return maxVal, root
 
     # Method to iterate the tree
     def __iter__(self):
